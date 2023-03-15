@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register Ipad System for MD12</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@2.51.3/dist/full.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body class="flex items-center flex-col py-10">
+    <h1 class="text-2xl mb-10">Ipad Register System</h1>
+    <div class="form-control mb-5">
+      <label class="label">
+        <span class="label-text">學號 School Number</span>
+      </label>
+      <label class="input-group">
+        <span>學號</span>
+        <input
+          type="text"
+          placeholder="Ex. 11S888"
+          class="input input-bordered"
+          id="schoolNumber"
+        />
+      </label>
+    </div>
+    <div class="form-control mb-5">
+      <label class="label">
+        <span class="label-text">座號 Class Number</span>
+      </label>
+      <label class="input-group">
+        <span>座號</span>
+        <input
+          type="text"
+          placeholder="Ex. 38"
+          class="input input-bordered"
+          id="classNumber"
+        />
+      </label>
+    </div>
+    <div class="form-control mb-5">
+      <label class="label">
+        <span class="label-text">姓名 Name</span>
+      </label>
+      <label class="input-group">
+        <span>姓名</span>
+        <input
+          type="text"
+          placeholder="Ex. 王德發"
+          class="input input-bordered"
+          id="name"
+        />
+      </label>
+    </div>
+    <div class="form-control mb-5">
+      <label class="label">
+        <span class="label-text">Ipad 編號 Ipad No.</span>
+      </label>
+      <label class="input-group">
+        <span>No.</span>
+        <input
+          type="text"
+          placeholder="Ex. A06"
+          class="input input-bordered"
+          id="ipadNumber"
+        />
+      </label>
+    </div>
+    <button onclick="register()" class="btn btn-wide btn-success btn-outline">
+      Register 登記
+    </button>
+  </body>
+
+  <script>
+    function register() {
+      const schoolNumber = document.getElementById("schoolNumber").value;
+      const classNumber = document.getElementById("classNumber").value;
+      const name = document.getElementById("name").value;
+      const ipadNumber = document.getElementById("ipadNumber").value;
+      if (!schoolNumber || !classNumber || !name || !ipadNumber) {
+        return alert("請填寫所有格子");
+      }
+      console.log("registering...");
+      console.log("Data Below", schoolNumber, classNumber, name, ipadNumber);
+      axios({
+        method: "post",
+        url: "/register",
+        data: {
+          schoolNumber,
+          classNumber,
+          name,
+          ipadNumber,
+        },
+      })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    }
+  </script>
+</html>
