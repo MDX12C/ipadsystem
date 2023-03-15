@@ -17,4 +17,4 @@ export const keyGen = (schoolNumber) => {
   return key;
 };
 
-console.log(keyGen("11s505"));
+// console.log(keyGen("11s505"));
