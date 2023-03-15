@@ -109,6 +109,7 @@
     <button
       onclick="register()"
       class="btn btn-wide btn-success btn-outline mt-10"
+      id="registerBtn"
     >
       Register 登記
     </button>
@@ -121,6 +122,7 @@
       const name = document.getElementById("name").value;
       const ipadNumber = document.getElementById("ipadNumber").value;
       const key = document.getElementById("vfkey").value;
+      const button = document.getElementById("registerBtn");
       if (!schoolNumber || !classNumber || !name || !ipadNumber || !key) {
         return swal("填寫資料錯誤", "請完整填寫表格", "error");
       }
@@ -134,7 +136,7 @@
         ipadNumber,
         key
       );
-
+      button.innerText = "Loading...";
       axios({
         method: "post",
         url: "/register",
@@ -148,9 +150,21 @@
       })
         .then((res) => {
           console.log(res);
-          swal("成功登記", "You just registered successfull!", "success");
+          const data = res.data;
+          if (data.status == "succeed") {
+            swal("成功登記", "You just registered successfull!", "success");
+          } else if (data.status == "wrongKey") {
+            swal("金鑰錯誤", "請確認是否使用正確資料", "error");
+          } else {
+            swal("出了點小問題", "In fact, I don't know wtf happened!");
+          }
+          button.innerText = "Register 登記";
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+
+          button.innerText = "Register 登記";
+        });
     }
   </script>
 </html>
