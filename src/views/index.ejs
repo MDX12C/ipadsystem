@@ -71,9 +71,22 @@
         />
       </label>
     </div>
-    <button onclick="register()" class="btn btn-wide btn-success btn-outline">
-      Register 登記
-    </button>
+    <label
+      for="my-modal"
+      onclick="register()"
+      class="btn btn-wide btn-success btn-outline"
+      >Register 登記</label
+    >
+    <input type="checkbox" id="my-modal" class="modal-toggle" />
+    <div class="modal">
+      <div class="modal-box">
+        <h3 class="font-bold text-lg">登記成功！歡迎打賞 Lazp</h3>
+        <p class="py-4">歡迎打賞 Lazp 啦</p>
+        <div class="modal-action">
+          <label for="my-modal" class="btn">Yay!</label>
+        </div>
+      </div>
+    </div>
   </body>
 
   <script>

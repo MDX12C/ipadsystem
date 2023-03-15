@@ -14,6 +14,9 @@ export const register = async (schoolNumber, classNumber, name, ipadNumber) => {
     date.getDate().toString();
 
   const db = deta.Base(dbTime);
-  const res = await db.put({ schoolNumber, classNumber, name, ipadNumber });
+  const res = await db.put(
+    { schoolNumber, classNumber, name, ipadNumber },
+    schoolNumber
+  );
   return res;
 };
