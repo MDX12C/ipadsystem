@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="pastel">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -12,9 +12,30 @@
     />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <style>
+      /* customize for alert package*/
+      .swal-modal {
+        background-color: #333333;
+      }
+
+      .swal-title {
+        color: #fff;
+      }
+
+      .swal-text {
+        color: #fff;
+      }
+
+      .swal-icon--success:after,
+      .swal-icon--success:before,
+      .swal-icon--success__hide-corners {
+        background-color: #333333;
+      }
+    </style>
   </head>
   <body class="flex items-center flex-col py-10">
-    <h1 class="text-2xl mb-10">Ipad Register System</h1>
+    <h1 class="text-2xl mb-10">iPad Register System</h1>
     <div class="form-control mb-5">
       <label class="label">
         <span class="label-text">學號 School Number</span>
@@ -59,7 +80,7 @@
     </div>
     <div class="form-control mb-5">
       <label class="label">
-        <span class="label-text">Ipad 編號 Ipad No.</span>
+        <span class="label-text">iPad 編號 iPad No.</span>
       </label>
       <label class="input-group">
         <span>No.</span>
@@ -71,22 +92,26 @@
         />
       </label>
     </div>
-    <label
-      for="my-modal"
-      onclick="register()"
-      class="btn btn-wide btn-success btn-outline"
-      >Register 登記</label
-    >
-    <input type="checkbox" id="my-modal" class="modal-toggle" />
-    <div class="modal">
-      <div class="modal-box">
-        <h3 class="font-bold text-lg">登記成功！歡迎打賞 Lazp</h3>
-        <p class="py-4">歡迎打賞 Lazp 啦</p>
-        <div class="modal-action">
-          <label for="my-modal" class="btn">Yay!</label>
-        </div>
-      </div>
+    <div class="form-control mb-5">
+      <label class="label">
+        <span class="label-text">安全驗證金鑰 Verification Key</span>
+      </label>
+      <label class="input-group">
+        <span>Key</span>
+        <input
+          type="text"
+          placeholder="Ex. aaaaaa"
+          class="input input-bordered"
+          id="vfkey"
+        />
+      </label>
     </div>
+    <button
+      onclick="register()"
+      class="btn btn-wide btn-success btn-outline mt-10"
+    >
+      Register 登記
+    </button>
   </body>
 
   <script>
@@ -95,11 +120,21 @@
       const classNumber = document.getElementById("classNumber").value;
       const name = document.getElementById("name").value;
       const ipadNumber = document.getElementById("ipadNumber").value;
-      if (!schoolNumber || !classNumber || !name || !ipadNumber) {
-        return alert("請填寫所有格子");
+      const key = document.getElementById("vfkey").value;
+      if (!schoolNumber || !classNumber || !name || !ipadNumber || !key) {
+        return swal("填寫資料錯誤", "請完整填寫表格", "error");
       }
+
       console.log("registering...");
-      console.log("Data Below", schoolNumber, classNumber, name, ipadNumber);
+      console.log(
+        "Data Below",
+        schoolNumber,
+        classNumber,
+        name,
+        ipadNumber,
+        key
+      );
+
       axios({
         method: "post",
         url: "/register",
@@ -108,9 +143,13 @@
           classNumber,
           name,
           ipadNumber,
+          key,
         },
       })
-        .then((res) => console.log(res))
+        .then((res) => {
+          console.log(res);
+          swal("成功登記", "You just registered successfull!", "success");
+        })
         .catch((err) => console.log(err));
     }
   </script>
