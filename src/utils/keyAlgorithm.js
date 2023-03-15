@@ -19,5 +19,5 @@ export const keyGen = (schoolNumber) => {
 
 dotenv.config();
 if (process.env.MODE != "PRODUCTION") {
-  console.log(keyGen("11s505"));
+  console.log(keyGen("11s242"));
 }
