@@ -5,7 +5,7 @@ dotenv.config();
 
 const deta = Deta(process.env.DATABASE_KEY);
 
-export const register = async (schoolNumber, classNumber, name, ipadNumber) => {
+export const register = async (schoolNumber, ipadNumber) => {
   const date = new Date();
 
   const dbTime =
@@ -14,9 +14,6 @@ export const register = async (schoolNumber, classNumber, name, ipadNumber) => {
     date.getDate().toString();
 
   const db = deta.Base(dbTime);
-  const res = await db.put(
-    { schoolNumber, classNumber, name, ipadNumber },
-    schoolNumber
-  );
+  const res = await db.put({ schoolNumber, ipadNumber }, schoolNumber);
   return res;
 };

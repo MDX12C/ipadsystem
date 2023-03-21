@@ -53,34 +53,6 @@
     </div>
     <div class="form-control mb-5">
       <label class="label">
-        <span class="label-text">座號 Class Number</span>
-      </label>
-      <label class="input-group">
-        <span>座號</span>
-        <input
-          type="text"
-          placeholder="Ex. 38"
-          class="input input-bordered"
-          id="classNumber"
-        />
-      </label>
-    </div>
-    <div class="form-control mb-5">
-      <label class="label">
-        <span class="label-text">姓名 Name</span>
-      </label>
-      <label class="input-group">
-        <span>姓名</span>
-        <input
-          type="text"
-          placeholder="Ex. 王德發"
-          class="input input-bordered"
-          id="name"
-        />
-      </label>
-    </div>
-    <div class="form-control mb-5">
-      <label class="label">
         <span class="label-text">iPad 編號 iPad No.</span>
       </label>
       <label class="input-group">
@@ -118,33 +90,27 @@
 
   <script>
     function register() {
-      const schoolNumber = document.getElementById("schoolNumber").value;
-      const classNumber = document.getElementById("classNumber").value;
-      const name = document.getElementById("name").value;
-      const ipadNumber = document.getElementById("ipadNumber").value;
-      const key = document.getElementById("vfkey").value;
+      const schoolNumber = document
+        .getElementById("schoolNumber")
+        .value.replaceAll(" ", "");
+      const ipadNumber = document
+        .getElementById("ipadNumber")
+        .value.replaceAll(" ", "");
+      const key = document.getElementById("vfkey").value.replaceAll(" ", "");
       const button = document.getElementById("registerBtn");
-      if (!schoolNumber || !classNumber || !name || !ipadNumber || !key) {
+      if (!schoolNumber || !ipadNumber || !key) {
         return swal("填寫資料錯誤", "請完整填寫表格", "error");
       }
 
       console.log("registering...");
-      console.log(
-        "Data Below",
-        schoolNumber,
-        classNumber,
-        name,
-        ipadNumber,
-        key
-      );
+      console.log("Data Below", schoolNumber, ipadNumber, key);
       button.innerText = "Loading...";
+      button.disabled = "true";
       axios({
         method: "post",
         url: "/register",
         data: {
           schoolNumber,
-          classNumber,
-          name,
           ipadNumber,
           key,
         },
@@ -155,15 +121,16 @@
           if (data.status == "succeed") {
             swal("成功登記", "You just registered successfull!", "success");
           } else if (data.status == "wrongKey") {
-            swal("金鑰錯誤", "請確認是否使用正確資料", "error");
+            swal("金鑰錯誤", "請確認是否使用正確金鑰", "error");
           } else {
             swal("出了點小問題", "In fact, I don't know wtf happened!");
           }
+          button.removeAttribute("disabled");
           button.innerText = "Register 登記";
         })
         .catch((err) => {
           console.log(err);
-
+          button.removeAttribute("disabled");
           button.innerText = "Register 登記";
         });
     }

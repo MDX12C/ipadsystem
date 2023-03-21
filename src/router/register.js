@@ -8,18 +8,13 @@ router.use(json());
 router.post("/register", async (req, res) => {
   const body = req.body;
 
-  if (body.key != keyGen(body.schoolNumber)) {
+  if (body.key != keyGen(String(body.schoolNumber).toLowerCase())) {
     return res.json({
       status: "wrongKey",
     });
   }
   try {
-    await register(
-      String(body.schoolNumber).toLowerCase(),
-      body.classNumber,
-      body.name,
-      body.ipadNumber
-    );
+    await register(String(body.schoolNumber).toLowerCase(), body.ipadNumber);
     res.json({
       status: "succeed",
     });
